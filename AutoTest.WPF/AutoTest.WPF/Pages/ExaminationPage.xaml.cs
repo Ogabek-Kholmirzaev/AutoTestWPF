@@ -3,9 +3,6 @@ using System.Windows.Controls;
 
 namespace AutoTest.WPF.Pages
 {
-    /// <summary>
-    /// Interaction logic for ExaminationPage.xaml
-    /// </summary>
     public partial class ExaminationPage : Page
     {
         public ExaminationPage(int? clickedTicketIndex = null)

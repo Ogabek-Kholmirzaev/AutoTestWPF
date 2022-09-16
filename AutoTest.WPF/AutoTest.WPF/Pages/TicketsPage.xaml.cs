@@ -3,9 +3,6 @@ using System.Windows.Controls;
 
 namespace AutoTest.WPF.Pages
 {
-    /// <summary>
-    /// Interaction logic for TicketsPage.xaml
-    /// </summary>
     public partial class TicketsPage : Page
     {
         public TicketsPage()
