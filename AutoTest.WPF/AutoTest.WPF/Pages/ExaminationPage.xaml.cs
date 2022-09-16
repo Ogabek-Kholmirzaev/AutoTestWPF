@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AutoTest.WPF.Pages
 {
@@ -20,9 +8,37 @@ namespace AutoTest.WPF.Pages
     /// </summary>
     public partial class ExaminationPage : Page
     {
-        public ExaminationPage()
+        public ExaminationPage(int? clickedTicketIndex = null)
         {
             InitializeComponent();
+            GenerateChoiceButton();
+
+            if (clickedTicketIndex != null) TitleLabel.Content = $"Ticket{clickedTicketIndex + 1}";
+        }
+
+        private void GenerateChoiceButton()
+        {
+            QuestionTextLabel.Content = "1 - savol?";
+
+            for (int i = 0; i < 7; i++)
+            {
+                var button = new Button();
+                button.Width = 300;
+                button.Height = 50;
+                button.FontSize = 18;
+                button.Margin = new Thickness(0, 5, 0, 5);
+                button.Content = $"Variant{i + 1}";
+                button.Tag = i;
+                button.Click += ChoiceButton_Clicked;
+
+                ChoicesPanel.Children.Add(button);
+            }
+        }
+
+        private void ChoiceButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            MessageBox.Show($"Variant{(int)button!.Tag + 1} Clicked");
         }
 
         private void MenuButtonClick(object sender, RoutedEventArgs e)

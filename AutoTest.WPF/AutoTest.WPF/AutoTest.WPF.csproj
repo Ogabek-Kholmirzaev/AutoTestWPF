@@ -7,4 +7,12 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Pages\car.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Pages\car.png" />
+  </ItemGroup>
+
 </Project>
