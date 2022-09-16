@@ -5,12 +5,18 @@ namespace AutoTest.WPF.Pages
 {
     public partial class ExaminationPage : Page
     {
+        private bool isTicketsPage { get; set; }
         public ExaminationPage(int? clickedTicketIndex = null)
         {
             InitializeComponent();
             GenerateChoiceButton();
 
-            if (clickedTicketIndex != null) TitleLabel.Content = $"Ticket{clickedTicketIndex + 1}";
+            if (clickedTicketIndex != null)
+            {
+                TitleLabel.Content = $"Ticket{clickedTicketIndex + 1}";
+                isTicketsPage = true;
+                MenuOrTicketsButton.Content = "Close";
+            }
         }
 
         private void GenerateChoiceButton()
@@ -40,7 +46,10 @@ namespace AutoTest.WPF.Pages
 
         private void MenuButtonClick(object sender, RoutedEventArgs e)
         {
-            MainWindow.InstanceMainWindow.MainWindowFrame.Navigate(new MenuPage());
+            if(!isTicketsPage)
+                MainWindow.InstanceMainWindow.MainWindowFrame.Navigate(new MenuPage());
+            else
+                MainWindow.InstanceMainWindow.MainWindowFrame.Navigate(new TicketsPage());
         }
     }
 }

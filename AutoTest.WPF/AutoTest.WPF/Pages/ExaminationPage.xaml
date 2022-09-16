@@ -17,6 +17,6 @@
                 <StackPanel Name="ChoicesPanel"></StackPanel>
             </ScrollViewer>
         </StackPanel>
-        <Button Click="MenuButtonClick" Content="Menu" Width="100" Height="60" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="16" FontWeight="SemiBold"></Button>
+        <Button Name="MenuOrTicketsButton" Click="MenuButtonClick" Content="Menu" Width="100" Height="60" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="16" FontWeight="SemiBold"></Button>
     </Grid>
 </Page>

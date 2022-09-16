@@ -5,7 +5,7 @@ namespace AutoTest.WPF
 {
     public partial class MainWindow : Window
     {
-        public static MainWindow InstanceMainWindow;
+        public static MainWindow InstanceMainWindow = new MainWindow();
         public MainWindow()
         {
             InitializeComponent();
