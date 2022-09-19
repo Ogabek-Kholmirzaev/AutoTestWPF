@@ -8,7 +8,6 @@ using System.Windows.Media.Imaging;
 
 namespace AutoTest.WPF.Pages
 {
-    //todo 8:17pm
     public partial class ExaminationPage : Page
     {
         private bool isTicketsPage { get; set; }
