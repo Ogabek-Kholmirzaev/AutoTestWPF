@@ -13,7 +13,7 @@ namespace AutoTest.WPF.Pages
 
         private void GenerateTicketsButton()
         {
-            for (int i = 0; i < 35; i++)
+            for (int i = 0; i < MainWindow.InstanceMainWindow.QuestionsRepository.TicketsCount(); i++)
             {
                 var button = new Button();
                 button.Width = 300;

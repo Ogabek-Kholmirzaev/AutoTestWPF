@@ -1,10 +1,10 @@
-﻿using System;
+﻿using AutoTest.WPF.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using AutoTest.WPF.Models;
 
 namespace AutoTest.WPF.Pages
 {
@@ -21,7 +21,7 @@ namespace AutoTest.WPF.Pages
             {
                 CreateTicket(clickedTicketIndex.Value);
 
-                TitleLabel.Content = $"Ticket{clickedTicketIndex + 1} + {CurrentTicket.Questions.Count} ta savol";
+                TitleLabel.Content = $"Ticket{clickedTicketIndex + 1}";
                 isTicketsPage = true;
                 MenuOrTicketsButton.Content = "Close";
             }
@@ -30,7 +30,7 @@ namespace AutoTest.WPF.Pages
                 var randomTicketIndex = new Random().Next(0, MainWindow.InstanceMainWindow.QuestionsRepository.TicketsCount());
                 CreateTicket(randomTicketIndex);
 
-                TitleLabel.Content = $"Ticket{randomTicketIndex + 1} + {CurrentTicket.Questions.Count} ta savol";
+                TitleLabel.Content = $"Ticket{randomTicketIndex + 1}";
             }
 
             ShowQuestion();
@@ -64,13 +64,18 @@ namespace AutoTest.WPF.Pages
             for (int i = 0; i < choices.Count; i++)
             {
                 var button = new Button();
-                button.Height = 40;
+                button.MinHeight = 30;
                 button.FontSize = 16;
                 button.Margin = new Thickness(15, 0, 15, 5);
-                button.Padding = new Thickness(5, 0, 5, 0);
-                button.Content = $"{choices[i].Text}";
+                button.Padding = new Thickness(7, 5, 7, 5);
                 button.Tag = choices[i];
                 button.Click += ChoiceButton_Clicked;
+
+                var textBlock = new TextBlock();
+                textBlock.Text = choices[i].Text;
+                textBlock.TextWrapping = TextWrapping.Wrap;
+
+                button.Content = textBlock;
 
                 ChoicesPanel.Children.Add(button);
             }
@@ -87,7 +92,7 @@ namespace AutoTest.WPF.Pages
 
         private void MenuButtonClick(object sender, RoutedEventArgs e)
         {
-            if(!isTicketsPage)
+            if (!isTicketsPage)
                 MainWindow.InstanceMainWindow.MainWindowFrame.Navigate(new MenuPage());
             else
                 MainWindow.InstanceMainWindow.MainWindowFrame.Navigate(new TicketsPage());
