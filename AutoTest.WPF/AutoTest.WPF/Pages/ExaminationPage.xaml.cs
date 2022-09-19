@@ -24,7 +24,6 @@ namespace AutoTest.WPF.Pages
 
                 TitleLabel.Content = $"Ticket{clickedTicketIndex + 1}";
                 isTicketsPage = true;
-                MenuOrTicketsButton.Content = "Close";
             }
             else
             {
@@ -45,8 +44,9 @@ namespace AutoTest.WPF.Pages
             for (int i = 0; i < questions.Count; i++)
             {
                 var button = new Button();
-                button.Height = 40;
-                button.Width = 40;
+                button.Height = 35;
+                button.Width = 35;
+                button.FontSize = 14;
                 button.Content = i + 1;
                 button.Tag = i;
                 button.Click += TicketQuestionsIndexPanelButtonClick;
@@ -54,13 +54,31 @@ namespace AutoTest.WPF.Pages
                 TicketQuestionsIndexPanel.Children.Add(button);
             }
         }
-
+            
         private void TicketQuestionsIndexPanelButtonClick(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
+            ChangeTicketQuestionsIndex(false, TicketQuestionsIndexPanel.Children[currentQuestionIndex] as Button);
             currentQuestionIndex = (int) button!.Tag;
-
             ShowQuestion();
+        }
+
+        private void ChangeTicketQuestionsIndex(bool isBool, Button button)
+        {
+            if (isBool)
+            {
+                button.Width = 40;
+                button.Height = 40;
+                button.FontSize = 18;
+                button.FontWeight = FontWeights.Bold;
+            }
+            else
+            {
+                button.Width = 35;
+                button.Height = 35;
+                button.FontSize = 14;
+                button.FontWeight = FontWeights.Normal;
+            }
         }
 
         private void CreateTicket(int ticketIndex)
@@ -71,6 +89,8 @@ namespace AutoTest.WPF.Pages
         private void ShowQuestion()
         {
             var question = CurrentTicket.Questions[currentQuestionIndex];
+
+            ChangeTicketQuestionsIndex(true, TicketQuestionsIndexPanel.Children[currentQuestionIndex] as Button);
 
             QuestionTextBlock.Text = $"{currentQuestionIndex + 1}. {question.Question}";
 
@@ -108,6 +128,23 @@ namespace AutoTest.WPF.Pages
 
                 ChoicesPanel.Children.Add(button);
             }
+
+            if (CurrentTicket.SolvedQuestionsDictionary.ContainsKey(currentQuestionIndex))
+            {
+                ChangeButtonColor(CurrentTicket.SolvedQuestionsDictionary[currentQuestionIndex]);
+            }
+        }
+
+        private void ChangeButtonColor(int indexAnsweredQuestion)
+        {
+            if (CurrentTicket.Questions[currentQuestionIndex].Choices[indexAnsweredQuestion].Answer)
+            {
+                (ChoicesPanel.Children[currentQuestionIndex] as Button).Background = new SolidColorBrush(Colors.LightGreen);
+            }
+            else
+            {
+                (ChoicesPanel.Children[currentQuestionIndex] as Button).Background = new SolidColorBrush(Colors.Red);
+            }
         }
 
         private void ChoiceButton_Clicked(object sender, RoutedEventArgs e)
@@ -115,30 +152,32 @@ namespace AutoTest.WPF.Pages
             var button = sender as Button;
             var choice = (Choice)button!.Tag;
 
+            if (CurrentTicket.SolvedQuestionsDictionary.ContainsKey(currentQuestionIndex)) return;
+
             if (choice.Answer)
             {
                 CurrentTicket.CorrectAnswersCount++;
                 button.Background = new SolidColorBrush(Colors.LightGreen);
+                (TicketQuestionsIndexPanel.Children[currentQuestionIndex] as Button).Background = new SolidColorBrush(Colors.LightGreen);
             }
             else
             {
                 button.Background = new SolidColorBrush(Colors.Red);
+                (TicketQuestionsIndexPanel.Children[currentQuestionIndex] as Button).Background = new SolidColorBrush(Colors.Red);
             }
 
-            CurrentTicket.SolvedQuestionsList.Add(currentQuestionIndex);
+            CurrentTicket.SolvedQuestionsDictionary.Add(currentQuestionIndex, CurrentTicket.Questions[currentQuestionIndex].Choices.IndexOf(choice));
 
-            if (CurrentTicket.SolvedQuestionsList.Count == CurrentTicket.QuestionsCount)
+            if (CurrentTicket.SolvedQuestionsDictionary.Count == CurrentTicket.QuestionsCount)
             {
-                MainWindow.InstanceMainWindow.MainWindowFrame.Navigate(new ExaminationResultPage(CurrentTicket.QuestionsCount, CurrentTicket.CorrectAnswersCount));
+                MainWindow.InstanceMainWindow.MainWindowFrame.Navigate(new ExaminationResultPage(CurrentTicket));
             }
         }
 
-        private void MenuButtonClick(object sender, RoutedEventArgs e)
+        private void CloseButtonClick(object sender, RoutedEventArgs e)
         {
-            if (!isTicketsPage)
-                MainWindow.InstanceMainWindow.MainWindowFrame.Navigate(new MenuPage());
-            else
-                MainWindow.InstanceMainWindow.MainWindowFrame.Navigate(new TicketsPage());
+            // if (!isTicketsPage)
+            MainWindow.InstanceMainWindow.MainWindowFrame.Navigate(new ExaminationResultPage(CurrentTicket));
         }
     }
 }

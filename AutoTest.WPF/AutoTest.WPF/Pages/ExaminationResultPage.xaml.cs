@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
+using AutoTest.WPF.Models;
 
 namespace AutoTest.WPF.Pages
 {
@@ -8,12 +10,12 @@ namespace AutoTest.WPF.Pages
     /// </summary>
     public partial class ExaminationResultPage : Page
     {
-        public ExaminationResultPage(int questionsCount, int correctAnswers)
+        public ExaminationResultPage(Ticket ticket)
         {
             InitializeComponent();
 
-            QuestionsCountTextBlock.Text = questionsCount.ToString();
-            CorrectAnswersCountTextBlock.Text = correctAnswers.ToString();
+            QuestionsCountTextBlock.Text = ticket.QuestionsCount.ToString();
+            CorrectAnswersCountTextBlock.Text = ticket.CorrectAnswersCount.ToString();
         }
 
         private void MenuButtonClick(object sender, RoutedEventArgs e)
