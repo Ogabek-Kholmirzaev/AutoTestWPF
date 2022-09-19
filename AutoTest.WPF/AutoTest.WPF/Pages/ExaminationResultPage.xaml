@@ -10,12 +10,15 @@
 
     <Grid>
         <Label Content="Result" Height="60" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold"/>
+        
         <StackPanel Margin="60">
             <Label Content="Number of Answers" FontSize="20" FontWeight="SemiBold"/>
             <TextBlock Name="QuestionsCountTextBlock" Text="0" FontSize="20"/>
-            <Label Name="CorrectAnswersCountLabel" Content="Number of Answers" FontSize="20" FontWeight="SemiBold"/>
+            
+            <Label Content="Number of Answers" FontSize="20" FontWeight="SemiBold"/>
             <TextBlock Name="CorrectAnswersCountTextBlock" Text="0" FontSize="20"/>
 
         </StackPanel>
+        <Button Name="MenuButton" Click="MenuButtonClick" Content="Menu" Width="100" Height="60" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="16" FontWeight="SemiBold"></Button>
     </Grid>
 </Page>

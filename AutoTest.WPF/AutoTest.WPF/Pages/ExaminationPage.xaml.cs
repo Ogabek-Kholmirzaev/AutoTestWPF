@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace AutoTest.WPF.Pages
@@ -33,6 +34,32 @@ namespace AutoTest.WPF.Pages
                 TitleLabel.Content = $"Ticket{randomTicketIndex + 1}";
             }
 
+            GenerateTicketIndexesButton();
+            ShowQuestion();
+        }
+
+        private void GenerateTicketIndexesButton()
+        {
+            var questions = CurrentTicket.Questions;
+
+            for (int i = 0; i < questions.Count; i++)
+            {
+                var button = new Button();
+                button.Height = 40;
+                button.Width = 40;
+                button.Content = i + 1;
+                button.Tag = i;
+                button.Click += TicketQuestionsIndexPanelButtonClick;
+
+                TicketQuestionsIndexPanel.Children.Add(button);
+            }
+        }
+
+        private void TicketQuestionsIndexPanelButtonClick(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            currentQuestionIndex = (int) button!.Tag;
+
             ShowQuestion();
         }
 
@@ -61,6 +88,8 @@ namespace AutoTest.WPF.Pages
         }
         private void GenerateChoiceButton(List<Choice> choices)
         {
+            ChoicesPanel.Children.Clear();
+
             for (int i = 0; i < choices.Count; i++)
             {
                 var button = new Button();
@@ -86,8 +115,22 @@ namespace AutoTest.WPF.Pages
             var button = sender as Button;
             var choice = (Choice)button!.Tag;
 
-            if (choice.Answer) MessageBox.Show("To'g'ri ✅");
-            else MessageBox.Show("Noto'g'ri ❌");
+            if (choice.Answer)
+            {
+                CurrentTicket.CorrectAnswersCount++;
+                button.Background = new SolidColorBrush(Colors.LightGreen);
+            }
+            else
+            {
+                button.Background = new SolidColorBrush(Colors.Red);
+            }
+
+            CurrentTicket.SolvedQuestionsList.Add(currentQuestionIndex);
+
+            if (CurrentTicket.SolvedQuestionsList.Count == CurrentTicket.QuestionsCount)
+            {
+                MainWindow.InstanceMainWindow.MainWindowFrame.Navigate(new ExaminationResultPage(CurrentTicket.QuestionsCount, CurrentTicket.CorrectAnswersCount));
+            }
         }
 
         private void MenuButtonClick(object sender, RoutedEventArgs e)
