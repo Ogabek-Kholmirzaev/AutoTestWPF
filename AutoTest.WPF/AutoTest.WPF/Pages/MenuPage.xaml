@@ -15,8 +15,8 @@
             <Image Height="450" Margin="0,10,0,10" Source="/Pages/car.png" />
             
             <StackPanel Orientation="Horizontal">
-                <Label Name="QuestionsResultLabel" Content="0/700" FontSize="18" FontWeight="Bold" Margin="50,0,0,0" HorizontalContentAlignment="Center"></Label>
-                <Label Name="TicketsResultLabel" Content="0/35"  FontSize="18" FontWeight="Bold" Margin="50,0,0,0" HorizontalContentAlignment="Center"></Label>
+                <Label Name="QuestionsResultLabel" Content="0/700" FontSize="18" FontWeight="Bold" Margin="50,0,0,0" HorizontalContentAlignment="Center" Background="YellowGreen"></Label>
+                <Label Name="TicketsResultLabel" Content="0/35"  FontSize="18" FontWeight="Bold" Margin="50,0,0,0" HorizontalContentAlignment="Center" Background="YellowGreen"></Label>
             </StackPanel>
             
             <StackPanel Height="160" Margin="0,20,0,0">
