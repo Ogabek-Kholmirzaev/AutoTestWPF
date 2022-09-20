@@ -174,11 +174,6 @@ namespace AutoTest.WPF.Pages
                         break;
                     }
             }
-
-            //if (CurrentTicket.SolvedQuestionsDictionary.Count == CurrentTicket.QuestionsCount)
-            //{
-            //    MainWindow.InstanceMainWindow.MainWindowFrame.Navigate(new ExaminationResultPage(CurrentTicket));
-            //}
         }
 
         private void FinishButtonClick(object sender, RoutedEventArgs e)
