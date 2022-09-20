@@ -16,7 +16,7 @@ namespace AutoTest.WPF.Pages
 
         private int CompletedTickets()
         {
-            return MainWindow.InstanceMainWindow.TicketsRepository.TicketsList.Count(ticket => ticket.QuestionsCount == ticket.SolvedQuestionsDictionary.Count);
+            return MainWindow.InstanceMainWindow.TicketsRepository.TicketsList.Count(ticket => ticket.QuestionsCount == ticket.CorrectAnswersCount);
         }
 
         private int CorrectAnswers()
