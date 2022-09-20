@@ -58,13 +58,15 @@ namespace AutoTest.WPF.Pages
         private void TicketQuestionsIndexPanelButtonClick(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            ChangeTicketQuestionsIndex(false, TicketQuestionsIndexPanel.Children[currentQuestionIndex] as Button);
+            ChangeTicketQuestionsIndex(false);
             currentQuestionIndex = (int)button!.Tag;
             ShowQuestion();
         }
 
-        private void ChangeTicketQuestionsIndex(bool isBool, Button button)
+        private void ChangeTicketQuestionsIndex(bool isBool)
         {
+            var button = (TicketQuestionsIndexPanel.Children[currentQuestionIndex] as Button)!;
+
             if (isBool)
             {
                 button.Width = 40;
@@ -79,6 +81,8 @@ namespace AutoTest.WPF.Pages
                 button.FontSize = 14;
                 button.FontWeight = FontWeights.Normal;
             }
+
+            TicketQuestionsIndexPanel.Children[currentQuestionIndex] = button;
         }
 
         private void CreateTicket(int ticketIndex)
@@ -90,7 +94,7 @@ namespace AutoTest.WPF.Pages
         {
             var question = CurrentTicket.Questions[currentQuestionIndex];
 
-            ChangeTicketQuestionsIndex(true, TicketQuestionsIndexPanel.Children[currentQuestionIndex] as Button);
+            ChangeTicketQuestionsIndex(true);
 
             QuestionTextBlock.Text = $"{currentQuestionIndex + 1}. {question.Question}";
 
@@ -126,52 +130,55 @@ namespace AutoTest.WPF.Pages
 
                 button.Content = textBlock;
 
+                if (CurrentTicket.SolvedQuestionsDictionary.ContainsKey(currentQuestionIndex))
+                {
+                    if(i == CurrentTicket.SolvedQuestionsDictionary[currentQuestionIndex]) ChangeButtonColor(choices[i].Answer, button);
+                }
+
                 ChoicesPanel.Children.Add(button);
             }
 
-            if (CurrentTicket.SolvedQuestionsDictionary.ContainsKey(currentQuestionIndex))
-            {
-                ChangeButtonColor(CurrentTicket.SolvedQuestionsDictionary[currentQuestionIndex]);
-            }
         }
 
-        private void ChangeButtonColor(int indexAnsweredQuestion)
+        private void ChangeButtonColor(bool isTrue, Button button)
         {
-            if (CurrentTicket.Questions[currentQuestionIndex].Choices[indexAnsweredQuestion].Answer)
-            {
-                (ChoicesPanel.Children[currentQuestionIndex] as Button).Background = new SolidColorBrush(Colors.LightGreen);
-            }
-            else
-            {
-                (ChoicesPanel.Children[currentQuestionIndex] as Button).Background = new SolidColorBrush(Colors.Red);
-            }
+
+            if (isTrue) button.Background = new SolidColorBrush(Colors.LightGreen);
+            else button.Background = new SolidColorBrush(Colors.Red);
         }
 
         private void ChoiceButton_Clicked(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            var choice = (Choice)button!.Tag;
-
-            if (CurrentTicket.SolvedQuestionsDictionary.ContainsKey(currentQuestionIndex)) return;
-
-            if (choice.Answer)
+            if (!CurrentTicket.SolvedQuestionsDictionary.ContainsKey(currentQuestionIndex))
             {
-                CurrentTicket.CorrectAnswersCount++;
-                button.Background = new SolidColorBrush(Colors.LightGreen);
-                (TicketQuestionsIndexPanel.Children[currentQuestionIndex] as Button).Background = new SolidColorBrush(Colors.LightGreen);
+                var button = sender as Button;
+                var choice = (Choice)button!.Tag;
+
+                if (choice.Answer)
+                {
+                    CurrentTicket.CorrectAnswersCount++;
+                    button.Background = new SolidColorBrush(Colors.LightGreen);
+                    (TicketQuestionsIndexPanel.Children[currentQuestionIndex] as Button).Background = new SolidColorBrush(Colors.LightGreen);
+                }
+                else
+                {
+                    button.Background = new SolidColorBrush(Colors.Red);
+                    (TicketQuestionsIndexPanel.Children[currentQuestionIndex] as Button).Background = new SolidColorBrush(Colors.Red);
+                }
+
+
+                for (int i = 0; i < CurrentTicket.Questions[currentQuestionIndex].Choices.Count; i++)
+                    if (CurrentTicket.Questions[currentQuestionIndex].Choices[i].Text == choice.Text)
+                    {
+                        CurrentTicket.SolvedQuestionsDictionary.Add(currentQuestionIndex, i);
+                        break;
+                    }
             }
-            else
+
+            if (CurrentTicket.SolvedQuestionsDictionary.Count == CurrentTicket.QuestionsCount)
             {
-                button.Background = new SolidColorBrush(Colors.Red);
-                (TicketQuestionsIndexPanel.Children[currentQuestionIndex] as Button).Background = new SolidColorBrush(Colors.Red);
+                MainWindow.InstanceMainWindow.MainWindowFrame.Navigate(new ExaminationResultPage(CurrentTicket));
             }
-
-            CurrentTicket.SolvedQuestionsDictionary.Add(currentQuestionIndex, CurrentTicket.Questions[currentQuestionIndex].Choices.IndexOf(choice));
-
-            //if (CurrentTicket.SolvedQuestionsDictionary.Count == CurrentTicket.QuestionsCount)
-            //{
-            //    MainWindow.InstanceMainWindow.MainWindowFrame.Navigate(new ExaminationResultPage(CurrentTicket));
-            //}
         }
 
         private void FinishButtonClick(object sender, RoutedEventArgs e)
