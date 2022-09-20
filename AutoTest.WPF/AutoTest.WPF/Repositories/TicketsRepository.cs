@@ -7,6 +7,9 @@ namespace AutoTest.WPF.Repositories
     {
         public List<Ticket> TicketsList { get; set; }
 
-
+        public TicketsRepository()
+        {
+            TicketsList = new List<Ticket>();
+        }
     }
 }

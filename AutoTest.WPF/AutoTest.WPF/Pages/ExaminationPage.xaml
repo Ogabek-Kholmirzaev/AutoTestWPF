@@ -24,6 +24,6 @@
             </ScrollViewer>
         </StackPanel>
         
-        <Button Name="CloseButton" Click="CloseButtonClick" Content="Close" Width="100" Height="60" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="16" FontWeight="SemiBold"></Button>
+        <Button Name="FinishButton" Click="FinishButtonClick" Content="Finish Test" Width="100" Height="60" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="16" FontWeight="SemiBold"></Button>
     </Grid>
 </Page>

@@ -16,6 +16,7 @@ namespace AutoTest.WPF.Pages
 
             QuestionsCountTextBlock.Text = ticket.QuestionsCount.ToString();
             CorrectAnswersCountTextBlock.Text = ticket.CorrectAnswersCount.ToString();
+            SelectedAnswersCountTextBlock.Text = ticket.SolvedQuestionsDictionary.Count.ToString();
         }
 
         private void MenuButtonClick(object sender, RoutedEventArgs e)

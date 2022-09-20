@@ -54,12 +54,12 @@ namespace AutoTest.WPF.Pages
                 TicketQuestionsIndexPanel.Children.Add(button);
             }
         }
-            
+
         private void TicketQuestionsIndexPanelButtonClick(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             ChangeTicketQuestionsIndex(false, TicketQuestionsIndexPanel.Children[currentQuestionIndex] as Button);
-            currentQuestionIndex = (int) button!.Tag;
+            currentQuestionIndex = (int)button!.Tag;
             ShowQuestion();
         }
 
@@ -168,15 +168,23 @@ namespace AutoTest.WPF.Pages
 
             CurrentTicket.SolvedQuestionsDictionary.Add(currentQuestionIndex, CurrentTicket.Questions[currentQuestionIndex].Choices.IndexOf(choice));
 
-            if (CurrentTicket.SolvedQuestionsDictionary.Count == CurrentTicket.QuestionsCount)
-            {
-                MainWindow.InstanceMainWindow.MainWindowFrame.Navigate(new ExaminationResultPage(CurrentTicket));
-            }
+            //if (CurrentTicket.SolvedQuestionsDictionary.Count == CurrentTicket.QuestionsCount)
+            //{
+            //    MainWindow.InstanceMainWindow.MainWindowFrame.Navigate(new ExaminationResultPage(CurrentTicket));
+            //}
         }
 
-        private void CloseButtonClick(object sender, RoutedEventArgs e)
+        private void FinishButtonClick(object sender, RoutedEventArgs e)
         {
-            // if (!isTicketsPage)
+            if (isTicketsPage)
+            {
+                for (int i = 0; i < MainWindow.InstanceMainWindow.TicketsRepository.TicketsList.Count; i++)
+                    if (MainWindow.InstanceMainWindow.TicketsRepository.TicketsList[i].Index == CurrentTicket.Index)
+                        MainWindow.InstanceMainWindow.TicketsRepository.TicketsList.RemoveAt(i);
+
+                MainWindow.InstanceMainWindow.TicketsRepository.TicketsList.Add(CurrentTicket);
+            }
+
             MainWindow.InstanceMainWindow.MainWindowFrame.Navigate(new ExaminationResultPage(CurrentTicket));
         }
     }

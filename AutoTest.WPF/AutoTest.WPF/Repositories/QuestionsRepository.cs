@@ -9,7 +9,7 @@ namespace AutoTest.WPF.Repositories
 {
     public class QuestionsRepository
     {
-        public int TicketQuestionsCount = 5;
+        public int TicketQuestionsCount = 20;
         public List<QuestionEntity> Questions { get; set; }
 
         public QuestionsRepository()

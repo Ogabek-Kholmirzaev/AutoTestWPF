@@ -21,6 +21,7 @@ namespace AutoTest.WPF.Models
             Index = index;
             SolvedQuestionsDictionary = new Dictionary<int, int>();
             Questions = questions;
+            CorrectAnswersCount = 0;
         }
     }
 }

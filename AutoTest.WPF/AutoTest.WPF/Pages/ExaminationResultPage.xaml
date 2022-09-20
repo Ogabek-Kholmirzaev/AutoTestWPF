@@ -13,11 +13,13 @@
         
         <StackPanel Margin="60">
             <Label Content="Number of Answers" FontSize="20" FontWeight="SemiBold"/>
-            <TextBlock Name="QuestionsCountTextBlock" Text="0" FontSize="20"/>
+            <TextBlock Name="QuestionsCountTextBlock" Text="0" FontSize="20" Margin="0,0,0,10"/>
             
             <Label Content="Number of Correct Answers" FontSize="20" FontWeight="SemiBold"/>
-            <TextBlock Name="CorrectAnswersCountTextBlock" Text="0" FontSize="20"/>
+            <TextBlock Name="CorrectAnswersCountTextBlock" Text="0" FontSize="20" Margin="0,0,0,10"/>
 
+            <Label Content="Number of Selected Answers" FontSize="20" FontWeight="SemiBold"/>
+            <TextBlock Name="SelectedAnswersCountTextBlock" Text="0" FontSize="20" Margin="0,0,0,10"/>
         </StackPanel>
         <Button Name="MenuButton" Click="MenuButtonClick" Content="Menu" Width="100" Height="60" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="16" FontWeight="SemiBold"></Button>
     </Grid>

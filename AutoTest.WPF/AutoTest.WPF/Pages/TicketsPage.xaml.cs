@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace AutoTest.WPF.Pages
@@ -20,9 +21,18 @@ namespace AutoTest.WPF.Pages
                 button.Height = 50;
                 button.FontSize = 18;
                 button.Margin = new Thickness(0, 5, 0, 5);
-                button.Content = $"Ticket{i + 1}";
                 button.Tag = i;
                 button.Click += TicketsButton_Click;
+
+
+                if (MainWindow.InstanceMainWindow.TicketsRepository.TicketsList.Exists(t => t.Index == i))
+                {
+                    var ticket = MainWindow.InstanceMainWindow.TicketsRepository.TicketsList.FindLast(t => t.Index == i);
+
+                    if (ticket.CorrectAnswersCount == ticket.QuestionsCount) button.Content = $"Ticket{i + 1}    ✅";
+                    else button.Content = $"Ticket{i + 1}    {ticket.CorrectAnswersCount}/{ticket.QuestionsCount}";
+                }
+                else button.Content = $"Ticket{i + 1}";
 
                 TicketsPanel.Children.Add(button);
             }
@@ -32,7 +42,7 @@ namespace AutoTest.WPF.Pages
         {
             var button = sender as Button;
             var tickesIndex = (int)button!.Tag;
-            
+
             // MessageBox.Show($"Ticket{tickesIndex + 1} clicked");
 
             MainWindow.InstanceMainWindow.MainWindowFrame.Navigate(new ExaminationPage(tickesIndex));

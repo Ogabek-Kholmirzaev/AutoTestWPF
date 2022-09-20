@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="icon.png" />
     <None Remove="Pages\avtotest.png" />
     <None Remove="Pages\car.png" />
   </ItemGroup>
@@ -17,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="icon.png" />
     <Resource Include="Pages\avtotest.png" />
     <Resource Include="Pages\car.png" />
   </ItemGroup>

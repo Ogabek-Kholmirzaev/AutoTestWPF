@@ -7,6 +7,7 @@ namespace AutoTest.WPF
     public partial class MainWindow : Window
     {
         public QuestionsRepository QuestionsRepository;
+        public TicketsRepository TicketsRepository;
         public static MainWindow InstanceMainWindow;
         public MainWindow()
         {
@@ -14,6 +15,7 @@ namespace AutoTest.WPF
             InstanceMainWindow = this;
 
             QuestionsRepository = new QuestionsRepository();
+            TicketsRepository = new TicketsRepository();
 
             MainWindowFrame.Navigate(new MenuPage());
         }
