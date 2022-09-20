@@ -175,10 +175,10 @@ namespace AutoTest.WPF.Pages
                     }
             }
 
-            if (CurrentTicket.SolvedQuestionsDictionary.Count == CurrentTicket.QuestionsCount)
-            {
-                MainWindow.InstanceMainWindow.MainWindowFrame.Navigate(new ExaminationResultPage(CurrentTicket));
-            }
+            //if (CurrentTicket.SolvedQuestionsDictionary.Count == CurrentTicket.QuestionsCount)
+            //{
+            //    MainWindow.InstanceMainWindow.MainWindowFrame.Navigate(new ExaminationResultPage(CurrentTicket));
+            //}
         }
 
         private void FinishButtonClick(object sender, RoutedEventArgs e)
