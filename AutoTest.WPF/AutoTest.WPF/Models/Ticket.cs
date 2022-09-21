@@ -7,13 +7,12 @@ namespace AutoTest.WPF.Models
         public int Index { get; set; }
         public int CorrectAnswersCount { get; set; }
         public List<QuestionEntity> Questions { get; set; }
-        public Dictionary<int, int> SolvedQuestionsDictionary;
-        public int QuestionsCount
+        public Dictionary<int, int> SolvedQuestionsDictionary { get; set; }
+        public int QuestionsCount { get; set; }
+
+        public Ticket()
         {
-            get
-            {
-                return Questions.Count;
-            }
+
         }
 
         public Ticket(int index, List<QuestionEntity> questions)
@@ -21,7 +20,14 @@ namespace AutoTest.WPF.Models
             Index = index;
             SolvedQuestionsDictionary = new Dictionary<int, int>();
             Questions = questions;
-            CorrectAnswersCount = 0;
+            QuestionsCount = questions.Count;
+        }
+
+        public Ticket(int index, int correctAnswersCount, int questionsCount)
+        {
+            Index = index;
+            CorrectAnswersCount = correctAnswersCount;
+            QuestionsCount = questionsCount;
         }
     }
 }

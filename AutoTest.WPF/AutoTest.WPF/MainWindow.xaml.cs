@@ -19,5 +19,10 @@ namespace AutoTest.WPF
 
             MainWindowFrame.Navigate(new MenuPage());
         }
+
+        private void ClosingApp(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            InstanceMainWindow.TicketsRepository.WriteToJson();
+        }
     }
 }
