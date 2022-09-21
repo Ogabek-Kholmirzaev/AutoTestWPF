@@ -37,7 +37,9 @@ namespace AutoTest.WPF.Repositories
             if (File.Exists(Path.Combine(Folder, FileName)))
             {
                 var jsonData = File.ReadAllText(Path.Combine(Folder, FileName));
-                TicketsList = JsonConvert.DeserializeObject<List<Ticket>>(jsonData);
+                
+                if (jsonData == "") TicketsList = new List<Ticket>();
+                else TicketsList = JsonConvert.DeserializeObject<List<Ticket>>(jsonData);
             }
         }
     }
